@@ -4,11 +4,15 @@ public class PlayerController : MonoBehaviour
 {
     public float Speed = 45.0f;
     private Rigidbody rb;
+    public float RotationSpeed = 1.0f;
     
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
         // Configuración importante del Rigidbody
         if (rb != null)
         {
@@ -23,7 +27,8 @@ public class PlayerController : MonoBehaviour
     }
     
     void Update()
-    {
+    {  
+        
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
         
@@ -39,5 +44,7 @@ public class PlayerController : MonoBehaviour
             // Fallback: movimiento directo (puede atravesar colliders)
             transform.Translate(movement * Time.deltaTime);
         }
+        float rotationY = Input.GetAxis("Mouse X");
+        transform.Rotate(new Vector3(0, rotationY * Time.deltaTime * RotationSpeed, 0));
     }
 }
